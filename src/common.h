@@ -24,5 +24,6 @@ using ShaderPtr = std::shared_ptr<Shader>;
 using ShaderWPtr = std::weak_ptr<Shader>;
 
 std::optional<std::string> LoadTextFile(const std::string& filename);
+glm::vec3 GetAttenuationCoeff(float distance);
 
 #endif // -COMMON_H_

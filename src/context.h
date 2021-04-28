@@ -7,6 +7,8 @@
 #include "buffer.h"
 #include "vertex_layout.h"
 #include "texture.h"
+#include "mesh.h"
+#include "model.h"
 
 CLASS_PTR(Context)
 class Context {
@@ -22,15 +24,39 @@ class Context {
         Context() {}
         bool Init();
         ProgramUPtr m_program;
+        ProgramUPtr m_simpleProgram;
 
-        VertexLayoutUPtr m_vertexLayout;
-        BufferUPtr m_vertexBuffer;
-        BufferUPtr m_indexBuffer;
+        MeshUPtr m_box;
+        ModelUPtr m_model;
         TextureUPtr m_texture;
         TextureUPtr m_texture2;
 
+        // animation
+        bool m_animation { true };
+
         // clear color
         glm::vec4 m_clearColor { glm::vec4(0.1f, 0.2f, 0.3f, 0.0f) };
+
+        // light parameter
+        struct Light {
+            glm::vec3 position { glm::vec3(2.0f, 2.0f, 2.0f) };
+            glm::vec3 direction { glm::vec3(-1.0f, -1.0f, -1.0f) };
+            glm::vec2 cutoff { glm::vec2(20.0f, 5.0f) };
+            float distance = { 32.0f };
+            glm::vec3 ambient { glm::vec3(0.1f, 0.1f, 0.1f) };
+            glm::vec3 diffuse { glm::vec3(0.5f, 0.5f, 0.5f) };
+            glm::vec3 specular { glm::vec3(1.0f, 1.0f, 1.0f) };
+        };
+        Light m_light;
+        bool m_flashLightMode { false };
+
+        // material parameter
+        struct Material {
+            TextureUPtr diffuse;
+            TextureUPtr specular;
+            float shininess { 32.0f };
+        };
+        Material m_material;
 
         // camera parameter
         bool m_cameraControl { false };
